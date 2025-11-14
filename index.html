@@ -33,6 +33,10 @@
             max-width: 800px;
             z-index: 1;
             cursor: pointer;
+            min-height: 140px; /* 为最高诗歌设置最小高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         #poem-text {
             font-size: 20px;
@@ -47,6 +51,9 @@
             display: block;
             margin-top: 0.5em;
             font-size: 14px;
+        }
+        .poem-author::after {
+            content: "\00a0\00a0";
         }
     </style>
 </head>
