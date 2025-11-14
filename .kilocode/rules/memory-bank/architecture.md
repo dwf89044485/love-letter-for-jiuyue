@@ -16,6 +16,7 @@
 - **CSS `object-fit`**: 使用 `object-fit: cover` 属性来确保视频铺满屏幕而无拉伸。
 - **HTML5 `<video>` 和 `<audio>` 标签**: 使用标准 HTML5 元素来播放媒体，并利用 `autoplay` 和 `loop` 属性实现自动和循环播放。
 - **CSS `transition`**: 用于实现情诗文本的渐隐渐显动画，比复杂的 `@keyframes` 更简洁高效。
+- **CSS Flexbox**: 用于实现诗歌容器内文本的垂直居中，确保布局稳定。
 - **JavaScript `setInterval`**: 用于创建定时循环，以固定间隔切换情诗。
 
 ## 设计模式
