@@ -32,6 +32,7 @@
             width: 80%;
             max-width: 800px;
             z-index: 1;
+            cursor: pointer;
         }
         #poem-text {
             font-size: 22px;
@@ -110,15 +111,15 @@
 
             // 情诗功能
             const poems = [
-                "万物皆有裂痕，那是光照进来的地方。<br><span class='poem-author'>—— 莱昂纳德·科恩</span>",
+                "万物皆有裂痕，<br>那是光照进来的地方。<br><span class='poem-author'>—— 莱昂纳德·科恩</span>",
                 "这样的夜晚似曾相识，<br>如在城市华灯下走过最遥远的路程。<br><span class='poem-author'>—— 罗伯特·弗罗斯特</span>",
-                "我行过许多地方的桥，看过许多次数的云，喝过许多种类的酒，<br>却只爱过一个正当最好年龄的人。<br><span class='poem-author'>—— 沈从文</span>",
+                "我行过许多地方的桥，<br>看过许多次数的云，<br>喝过许多种类的酒，<br>却只爱过一个正当最好年龄的人。<br><span class='poem-author'>—— 沈从文</span>",
                 "我爱你，不知怎么爱，何时爱，从何处爱，<br>我爱你，直截了当，不复杂也不骄傲，<br>我爱你，因为我不知道除此之外还有什么别的路。<br><span class='poem-author'>—— 巴勃罗·聂鲁达</span>",
                 "我们分担寒潮、风雷、霹雳，<br>我们共享雾霭、流岚、虹霓。<br><span class='poem-author'>—— 舒婷</span>",
                 "草在结它的种子，风在摇它的叶子，<br>我们站着，不说话，就十分美好。<br><span class='poem-author'>—— 顾城</span>",
                 "我爱你，不光因为你的样子，<br>还因为，<br>和你在一起时，我的样子。<br><span class='poem-author'>—— 罗伊·克里夫特</span>",
                 "从前的日色变得慢，<br>车，马，邮件都慢，<br>一生只够爱一个人。<br><span class='poem-author'>—— 木心</span>",
-                "春水初生，春林初盛，春风十里，不如你。<br><span class='poem-author'>—— 冯唐</span>",
+                "春水初生，春林初盛，<br>春风十里，不如你。<br><span class='poem-author'>—— 冯唐</span>",
                 "你，一会儿看我，一会儿看云，<br>我觉得，你看我时很远，你看云时很近。<br><span class='poem-author'>—— 顾城</span>"
             ];
 
@@ -147,6 +148,10 @@
 
             // 10秒后开始切换
             setInterval(changePoem, 10000);
+
+            // 点击情诗区域切换下一首诗
+            const poemContainer = document.getElementById('poem-container');
+            poemContainer.addEventListener('click', changePoem);
         });
     </script>
 </body>
