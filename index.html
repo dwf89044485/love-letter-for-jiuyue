@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>爱你狍狍</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Kaiti SC', 'KaiTi', '楷体', serif;
+        }
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        #poem-container {
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            z-index: 1;
+        }
+        #poem-text {
+            font-size: 22px;
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        #poem-text.fade-in {
+            opacity: 0.7;
+        }
+        .poem-author {
+            display: block;
+            margin-top: 0.5em;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <audio autoplay loop id="bg-audio">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <div id="poem-container">
+        <p id="poem-text"></p>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('bg-audio');
+            const video = document.getElementById('bg-video');
+            
+            // 尝试自动播放音频
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    console.log("音频自动播放成功！");
+                }).catch(error => {
+                    console.log("音频自动播放被浏览器阻止。音频将在用户首次与页面交互后播放。");
+                });
+            }
+            
+            // 监听用户的真实交互
+            const handleUserInteraction = () => {
+                audio.play().then(() => {
+                    console.log("用户交互后音频播放成功");
+                }).catch(err => {
+                    console.log("音频播放失败:", err);
+                });
+                
+                // 确保视频也在播放
+                video.play().catch(err => {
+                    console.log("视频播放失败:", err);
+                });
+            };
+            
+            // 监听多种用户交互事件
+            ['click', 'touchstart', 'touchend', 'keydown'].forEach(eventType => {
+                document.addEventListener(eventType, handleUserInteraction, { once: true });
+            });
+            
+            // 移动端特殊处理：监听页面可见性变化
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    setTimeout(() => {
+                        audio.play().catch(() => {});
+                        video.play().catch(() => {});
+                    }, 100);
+                }
+            });
+
+            // 情诗功能
+            const poems = [
+                "万物皆有裂痕，那是光照进来的地方。<br><span class='poem-author'>—— 莱昂纳德·科恩</span>",
+                "这样的夜晚似曾相识<br>如在城市华灯下走过最遥远的路程<br><span class='poem-author'>—— 罗伯特·弗罗斯特</span>",
+                "我行过许多地方的桥， 看过许多次数的云， 喝过许多种类的酒， 却只爱过一个正当最好年龄的人。<br><span class='poem-author'>—— 沈从文</span>",
+                "我爱你，不知怎么爱，何时爱，从何处爱。 我爱你，直截了当，不复杂也不骄傲； 我爱你，因为我不知道除此之外还有什么别的路。<br><span class='poem-author'>—— 巴勃罗·聂鲁达</span>",
+                "我们分担寒潮、风雷、霹雳； 我们共享雾霭、流岚、虹霓。<br><span class='poem-author'>—— 舒婷</span>",
+                "草在结它的种子，风在摇它的叶子。 我们站着，不说话，就十分美好。<br><span class='poem-author'>—— 顾城</span>",
+                "我爱你，不光因为你的样子， 还因为，和你在一起时，我的样子。<br><span class='poem-author'>—— 罗伊·克里夫特</span>",
+                "从前的日色变得慢。 车，马，邮件都慢。 一生只够爱一个人。<br><span class='poem-author'>—— 木心</span>",
+                "春水初生，春林初盛， 春风十里，不如你。<br><span class='poem-author'>—— 冯唐</span>",
+                "你， 一会儿看我， 一会儿看云。我觉得， 你看我时很远， 你看云时很近。<br><span class='poem-author'>—— 顾城</span>"
+            ];
+
+            const poemText = document.getElementById('poem-text');
+            let currentPoemIndex = -1;
+
+            function changePoem() {
+                poemText.classList.remove('fade-in'); // 开始渐隐
+
+                setTimeout(() => {
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * poems.length);
+                    } while (newIndex === currentPoemIndex);
+                    
+                    currentPoemIndex = newIndex;
+                    poemText.innerHTML = poems[currentPoemIndex];
+                    poemText.classList.add('fade-in'); // 开始渐显
+                }, 1500); // 等待渐隐动画完成
+            }
+
+            // 页面加载时，立即显示一首随机的诗
+            currentPoemIndex = Math.floor(Math.random() * poems.length);
+            poemText.innerHTML = poems[currentPoemIndex];
+            poemText.classList.add('fade-in');
+
+            // 10秒后开始切换
+            setInterval(changePoem, 10000);
+        });
+    </script>
+</body>
+</html>
